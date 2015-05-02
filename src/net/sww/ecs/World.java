@@ -5,9 +5,11 @@ import java.util.Map;
 
 public class World {
     private Map<Long, Entity> entities;
+    private Map<String, Entity> tags;
 
     public World() {
         entities = new HashMap<Long, Entity>();
+        tags = new HashMap<String, Entity>();
     }
 
     public Entity createEntity() {
@@ -20,5 +22,13 @@ public class World {
         for (Entity entity : entities.values()) {
             entity.update(dt);
         }
+    }
+
+    void tag(Entity entity, String tag) {
+        tags.put(tag, entity);
+    }
+
+    public Entity getByTag(String tag) {
+        return tags.get(tag);
     }
 }

@@ -3,9 +3,9 @@ package net.sww.ecs;
 import java.util.*;
 
 public class Entity {
-    private long id;
+    long id;
 
-    private World world;
+    World world;
 
     private Map<Class<? extends Component>, Component> components;
 
@@ -54,6 +54,10 @@ public class Entity {
         entity.abandonParent();
         entity.parent = this;
         children.add(entity);
+    }
+
+    public void setTag(String tag) {
+        world.tag(this, tag);
     }
 
     private void abandonParent() {

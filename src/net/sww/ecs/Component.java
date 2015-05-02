@@ -18,4 +18,8 @@ public abstract class Component {
     public <T extends Component> T get(Class<T> type) {
         return owner.get(type);
     }
+
+    public World getWorld() {
+        return owner.world;
+    }
 }
