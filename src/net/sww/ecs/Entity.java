@@ -27,11 +27,13 @@ public class Entity {
     public void install(Component component) {
         components.put(component.getClass(), component);
         component.installed(this);
+        world.onComponentInstalled(this, component);
     }
 
     public void uninstall(Component component) {
         components.remove(component.getClass());
         component.uninstalled(this);
+        world.onComponentUninstalled(this, component);
     }
 
     public void emit(Event event) {
