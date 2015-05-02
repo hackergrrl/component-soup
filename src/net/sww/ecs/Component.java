@@ -6,12 +6,14 @@ public abstract class Component {
 
     void installed(Entity entity) {
         this.owner = entity;
+        init();
     }
     void uninstalled(Entity entity) {
         this.owner = null;
     }
     public void update(float dt) {}
     public void onEvent(Event msg) {}
+    public void init() {}
 
     public <T extends Component> T get(Class<T> type) {
         return owner.get(type);

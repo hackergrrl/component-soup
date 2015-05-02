@@ -9,10 +9,15 @@ public class Entity {
 
     private Map<Class<? extends Component>, Component> components;
 
+    private Entity parent;
+    private List<Entity> children;
+
     public Entity(World world) {
         this.world = world;
         components = new HashMap<Class<? extends Component>, Component>();
         id = (new Random()).nextLong();
+        parent = null;
+        children = new LinkedList<Entity>();
     }
 
     public long getId() {
@@ -43,5 +48,22 @@ public class Entity {
 
     public <T extends Component> T get(Class<T> type) {
         return type.cast(components.get(type));
+    }
+
+    public void addChild(Entity entity) {
+        entity.abandonParent();
+        entity.parent = this;
+        children.add(entity);
+    }
+
+    private void abandonParent() {
+        if (parent != null) {
+            parent.removeChild(this);
+            parent = null;
+        }
+    }
+
+    private void removeChild(Entity entity) {
+        children.remove(entity);
     }
 }
