@@ -2,7 +2,7 @@ package net.sww.ecs;
 
 import java.util.*;
 
-public class Entity {
+public final class Entity {
     long id;
 
     World world;
@@ -64,11 +64,14 @@ public class Entity {
     }
 
     public void addChild(Entity entity) {
-        entity.abandonParent();
+        Entity oldParent = entity.parent;
+        if (oldParent != null) {
+            oldParent.children.remove(this);
+        }
         entity.parent = this;
         children.add(entity);
 //            this.sendEvent();
-//            entity.sendEvent();
+        entity.sendEvent(new NewParent(oldParent, this));
     }
 
     public void abandonParent() {
@@ -77,7 +80,7 @@ public class Entity {
             parent.children.remove(this);
             parent = null;
 //            oldParent.sendEvent();
-//            this.sendEvent();
+            this.sendEvent(new NewParent(oldParent, null));
         }
     }
 

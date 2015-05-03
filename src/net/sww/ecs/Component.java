@@ -15,11 +15,11 @@ public abstract class Component {
     public void onEvent(Event msg) {}
     public void init() {}
 
-    public <T extends Component> T get(Class<T> type) {
+    public final <T extends Component> T get(Class<T> type) {
         return entity.get(type);
     }
 
-    public World getWorld() {
+    public final World getWorld() {
         return entity.world;
     }
 }
