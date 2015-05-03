@@ -24,16 +24,18 @@ public class Entity {
         return id;
     }
 
-    public void install(Component component) {
+    public Entity install(Component component) {
         components.put(component.getClass(), component);
         component.installed(this);
         world.onComponentInstalled(this, component);
+        return this;
     }
 
-    public void uninstall(Component component) {
+    public Entity uninstall(Component component) {
         components.remove(component.getClass());
         component.uninstalled(this);
         world.onComponentUninstalled(this, component);
+        return this;
     }
 
     public void emit(Event event) {
