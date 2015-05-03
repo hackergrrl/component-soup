@@ -38,9 +38,18 @@ public class Entity {
         return this;
     }
 
-    public void emit(Event event) {
+    public void sendEvent(Event event) {
         for (Component component : components.values()) {
             component.onEvent(event);
+        }
+    }
+
+    public void broadcastEvent(Event event) {
+        for (Component component : components.values()) {
+            component.onEvent(event);
+        }
+        for (Entity entity : children) {
+            entity.broadcastEvent(event);
         }
     }
 
