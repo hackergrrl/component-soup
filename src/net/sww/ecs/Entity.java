@@ -67,20 +67,28 @@ public class Entity {
         entity.abandonParent();
         entity.parent = this;
         children.add(entity);
+//            this.sendEvent();
+//            entity.sendEvent();
+    }
+
+    public void abandonParent() {
+        if (parent != null) {
+            Entity oldParent = parent;
+            parent.children.remove(this);
+            parent = null;
+//            oldParent.sendEvent();
+//            this.sendEvent();
+        }
+    }
+
+    public void removeChild(Entity entity) {
+        if (entity.parent != this) {
+            throw new IllegalArgumentException("cannot remove entity that is not a child of parent");
+        }
+        entity.abandonParent();
     }
 
     public void setTag(String tag) {
         world.tag(this, tag);
-    }
-
-    private void abandonParent() {
-        if (parent != null) {
-            parent.removeChild(this);
-            parent = null;
-        }
-    }
-
-    private void removeChild(Entity entity) {
-        children.remove(entity);
     }
 }

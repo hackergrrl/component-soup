@@ -2,24 +2,24 @@ package net.sww.ecs;
 
 public abstract class Component {
 
-    protected Entity owner;
+    protected Entity entity;
 
     void installed(Entity entity) {
-        this.owner = entity;
+        this.entity = entity;
         init();
     }
     void uninstalled(Entity entity) {
-        this.owner = null;
+        this.entity = null;
     }
     public void update(float dt) {}
     public void onEvent(Event msg) {}
     public void init() {}
 
     public <T extends Component> T get(Class<T> type) {
-        return owner.get(type);
+        return entity.get(type);
     }
 
     public World getWorld() {
-        return owner.world;
+        return entity.world;
     }
 }
