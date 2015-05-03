@@ -65,4 +65,14 @@ public final class World {
             manager.onComponentUninstalled(entity, component);
         }
     }
+
+    public List<Entity> queryAllInLayers(int layers) {
+        LinkedList<Entity> results = new LinkedList<Entity>();
+        for (Entity entity : entities.values()) {
+            if (entity.isInLayers(layers)) {
+                results.add(entity);
+            }
+        }
+        return results;
+    }
 }

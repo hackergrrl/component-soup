@@ -5,6 +5,8 @@ import java.util.*;
 public final class Entity {
     long id;
 
+    int layers;
+
     World world;
 
     private Map<Class<? extends Component>, Component> components;
@@ -97,5 +99,17 @@ public final class Entity {
 
     public Entity getParent() {
         return parent;
+    }
+
+    public void addToLayers(int layers) {
+        this.layers |= layers;
+    }
+
+    public void removeFromLayers(int layers) {
+        this.layers &= (~layers);
+    }
+
+    public boolean isInLayers(int layers) {
+        return (this.layers & layers) != 0;
     }
 }
