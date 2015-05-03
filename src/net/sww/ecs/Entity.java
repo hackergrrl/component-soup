@@ -91,4 +91,8 @@ public class Entity {
     public void setTag(String tag) {
         world.tag(this, tag);
     }
+
+    public Entity getParent() {
+        return parent;
+    }
 }
