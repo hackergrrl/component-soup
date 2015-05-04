@@ -9,16 +9,20 @@ public final class World {
     private Map<Long, Entity> entities;
     private Map<String, Entity> tags;
     private List<Manager> managers;
+    private List<Entity> toAdd;
+    private List<Entity> toRemove;
 
     public World() {
         entities = new HashMap<Long, Entity>();
         tags = new HashMap<String, Entity>();
         managers = new LinkedList<Manager>();
+        toAdd = new LinkedList<Entity>();
+        toRemove = new LinkedList<Entity>();
     }
 
     public Entity createEntity() {
         Entity entity = new Entity(this);
-        entities.put(entity.getId(), entity);
+        toAdd.add(entity);
 
         for (Manager manager : managers) {
             manager.onEntityAdded(entity);
@@ -28,7 +32,7 @@ public final class World {
     }
 
     public void removeEntity(Entity entity) {
-        entities.remove(entity.getId());
+        toRemove.add(entity);
 
         for (Manager manager : managers) {
             manager.onEntityRemoved(entity);
@@ -36,9 +40,19 @@ public final class World {
     }
 
     public void update(float dt) {
+        for (Entity entity : toAdd) {
+            entities.put(entity.getId(), entity);
+        }
+        toAdd.clear();
+
         for (Entity entity : entities.values()) {
             entity.update(dt);
         }
+
+        for (Entity entity : toRemove) {
+            entities.remove(entity.getId());
+        }
+        toRemove.clear();
     }
 
     void tag(Entity entity, String tag) {

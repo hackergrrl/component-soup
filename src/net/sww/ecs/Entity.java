@@ -14,7 +14,7 @@ public final class Entity {
     private Entity parent;
     private List<Entity> children;
 
-    public Entity(World world) {
+    Entity(World world) {
         this.world = world;
         components = new HashMap<Class<? extends Component>, Component>();
         id = (new Random()).nextLong();
