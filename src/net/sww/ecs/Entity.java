@@ -9,7 +9,7 @@ public final class Entity {
 
     World world;
 
-    private Map<Class<? extends Component>, Component> components;
+    Map<Class<? extends Component>, Component> components;
 
     private Entity parent;
     private List<Entity> children;

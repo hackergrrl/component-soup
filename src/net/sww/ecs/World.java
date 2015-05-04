@@ -35,6 +35,10 @@ public final class World {
         toRemove.add(entity);
 
         for (Manager manager : managers) {
+            for (Component component : entity.components.values()) {
+                manager.onComponentUninstalled(entity, component);
+            }
+
             manager.onEntityRemoved(entity);
         }
     }
