@@ -38,7 +38,6 @@ public final class World {
             for (Component component : entity.components.values()) {
                 manager.onComponentUninstalled(entity, component);
             }
-
             manager.onEntityRemoved(entity);
         }
     }

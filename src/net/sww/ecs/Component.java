@@ -2,7 +2,7 @@ package net.sww.ecs;
 
 public abstract class Component {
 
-    protected Entity entity;
+    public Entity entity;
 
     void installed(Entity entity) {
         this.entity = entity;
