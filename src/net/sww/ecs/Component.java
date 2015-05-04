@@ -22,4 +22,12 @@ public abstract class Component {
     public final World getWorld() {
         return entity.world;
     }
+
+    public void sendEvent(Event event) {
+        entity.sendEvent(event);
+    }
+
+    public void broadcastEvent(Event event) {
+        entity.broadcastEvent(event);
+    }
 }
