@@ -9,7 +9,10 @@ public final class Entity {
 
     World world;
 
+    boolean componentsLocked = false;
     Map<Class<? extends Component>, Component> components;
+
+    List<Component> toAdd, toRemove;
 
     private Entity parent;
     private List<Entity> children;
@@ -20,6 +23,8 @@ public final class Entity {
         id = (new Random()).nextLong();
         parent = null;
         children = new LinkedList<Entity>();
+        toAdd = new LinkedList<Component>();
+        toRemove = new LinkedList<Component>();
     }
 
     public long getId() {
@@ -27,17 +32,11 @@ public final class Entity {
     }
 
     public Entity install(Component component) {
-        components.put(component.getClass(), component);
-        component.installed(this);
-        world.onComponentInstalled(this, component);
-        return this;
+        return _install(component);
     }
 
     public Entity uninstall(Component component) {
-        components.remove(component.getClass());
-        component.uninstalled(this);
-        world.onComponentUninstalled(this, component);
-        return this;
+        return _uninstall(component);
     }
 
     public void sendEvent(Event event) {
@@ -56,9 +55,21 @@ public final class Entity {
     }
 
     public void update(float dt) {
+        componentsLocked = true;
         for (Component component : components.values()) {
             component.update(dt);
         }
+        componentsLocked = false;
+
+        for (Component component : toAdd) {
+            _install(component);
+        }
+        toAdd.clear();
+
+        for (Component component : toRemove) {
+            _uninstall(component);
+        }
+        toRemove.clear();
     }
 
     public <T extends Component> T get(Class<T> type) {
@@ -111,5 +122,27 @@ public final class Entity {
 
     public boolean isInLayers(int layers) {
         return (this.layers & layers) != 0;
+    }
+
+    private Entity _install(Component component) {
+        if (componentsLocked) {
+            toAdd.add(component);
+        } else {
+            components.put(component.getClass(), component);
+            component.installed(this);
+            world.onComponentInstalled(this, component);
+        }
+        return this;
+    }
+
+    private Entity _uninstall(Component component) {
+        if (componentsLocked) {
+            toRemove.add(component);
+        } else {
+            components.remove(component.getClass());
+            component.uninstalled(this);
+            world.onComponentUninstalled(this, component);
+        }
+        return this;
     }
 }
