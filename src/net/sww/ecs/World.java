@@ -40,6 +40,10 @@ public final class World {
             }
             manager.onEntityRemoved(entity);
         }
+
+        for (Entity child : entity.children) {
+            removeEntity(child);
+        }
     }
 
     public void update(float dt) {

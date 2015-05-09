@@ -14,8 +14,8 @@ public final class Entity {
 
     List<Component> toAdd, toRemove;
 
-    private Entity parent;
-    private List<Entity> children;
+    Entity parent;
+    List<Entity> children;
 
     Entity(World world) {
         this.world = world;
