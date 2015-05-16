@@ -31,6 +31,10 @@ public final class Entity {
         return id;
     }
 
+    public Iterator<Entity> getChildren() {
+        return children.listIterator();
+    }
+
     public Entity install(Component component) {
         return _install(component);
     }
@@ -74,6 +78,10 @@ public final class Entity {
 
     public <T extends Component> T get(Class<T> type) {
         return type.cast(components.get(type));
+    }
+
+    public <T extends Component> boolean has(Class<T> type) {
+        return get(type) != null;
     }
 
     public void addChild(Entity entity) {
