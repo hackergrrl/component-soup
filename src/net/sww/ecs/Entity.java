@@ -44,15 +44,19 @@ public final class Entity {
     }
 
     public void sendEvent(Event event) {
+        componentsLocked = true;
         for (Component component : components.values()) {
             component.onEvent(event);
         }
+        componentsLocked = false;
     }
 
     public void broadcastEvent(Event event) {
+        componentsLocked = true;
         for (Component component : components.values()) {
             component.onEvent(event);
         }
+        componentsLocked = false;
         for (Entity entity : children) {
             entity.broadcastEvent(event);
         }
