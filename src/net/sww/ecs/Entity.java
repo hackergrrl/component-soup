@@ -35,6 +35,17 @@ public final class Entity {
         return children.listIterator();
     }
 
+    public <T extends Component> List<T> getChildrenWithComponent(Class<T> type) {
+        List<T> results = new LinkedList<T>();
+        for (Entity child : children) {
+            T component = child.get(type);
+            if (component != null) {
+                results.add(component);
+            }
+        }
+        return results;
+    }
+
     public Entity install(Component component) {
         return _install(component);
     }
