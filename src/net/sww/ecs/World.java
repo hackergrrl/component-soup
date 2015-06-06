@@ -32,18 +32,10 @@ public final class World {
     }
 
     public void removeEntity(Entity entity) {
-        toRemove.add(entity);
-
-        for (Manager manager : managers) {
-            for (Component component : entity.components.values()) {
-                manager.onComponentUninstalled(entity, component);
-            }
-            manager.onEntityRemoved(entity);
-        }
-
         for (Entity child : entity.children) {
             removeEntity(child);
         }
+        toRemove.add(entity);
     }
 
     public void update(float dt) {
@@ -57,6 +49,13 @@ public final class World {
         }
 
         for (Entity entity : toRemove) {
+            for (Manager manager : managers) {
+                for (Component component : entity.components.values()) {
+                    manager.onComponentUninstalled(entity, component);
+                }
+                manager.onEntityRemoved(entity);
+            }
+
             entities.remove(entity.getId());
         }
         toRemove.clear();

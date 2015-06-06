@@ -147,6 +147,10 @@ public final class Entity {
         return (this.layers & layers) != 0;
     }
 
+    public void removeFromWorld() {
+        world.removeEntity(this);
+    }
+
     private Entity _install(Component component) {
         if (componentsLocked) {
             toAdd.add(component);
