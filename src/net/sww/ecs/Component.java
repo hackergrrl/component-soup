@@ -19,6 +19,10 @@ public abstract class Component {
         return entity.get(type);
     }
 
+    public final <T extends Component> boolean has(Class<T> type) {
+        return entity.has(type);
+    }
+
     public final World getWorld() {
         return entity.world;
     }
