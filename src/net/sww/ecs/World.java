@@ -55,6 +55,9 @@ public final class World {
                 }
                 manager.onEntityRemoved(entity);
             }
+            if (entity.parent != null) {
+                entity.parent.removeChild(entity);
+            }
 
             entities.remove(entity.getId());
         }
