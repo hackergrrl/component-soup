@@ -50,6 +50,10 @@ public final class Entity {
         return _install(component);
     }
 
+    public <T extends Component> Entity uninstall(Class<T> type) {
+        return _uninstall(get(type));
+    }
+
     public Entity uninstall(Component component) {
         return _uninstall(component);
     }
