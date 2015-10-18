@@ -2,6 +2,7 @@ package net.sww.ecs;
 
 public abstract class Component {
 
+    // TODO(sww): make this private
     public Entity entity;
 
     void installed(Entity entity) {
@@ -25,6 +26,10 @@ public abstract class Component {
 
     public final World getWorld() {
         return entity.world;
+    }
+
+    public final Entity getEntity() {
+        return entity;
     }
 
     public void sendEvent(Event event) {
