@@ -13,6 +13,7 @@ public abstract class Component {
         this.entity = null;
     }
     public void update(float dt) {}
+    public void lateUpdate(float dt) {}
     public void onEvent(Event msg) {}
     public void init() {}
 
@@ -32,11 +33,11 @@ public abstract class Component {
         return entity;
     }
 
-    public void sendEvent(Event event) {
+    public final void sendEvent(Event event) {
         entity.sendEvent(event);
     }
 
-    public void broadcastEvent(Event event) {
+    public final void broadcastEvent(Event event) {
         entity.broadcastEvent(event);
     }
 }

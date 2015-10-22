@@ -82,6 +82,9 @@ public final class Entity {
         for (Component component : components.values()) {
             component.update(dt);
         }
+        for (Component component : components.values()) {
+            component.lateUpdate(dt);
+        }
         componentsLocked = false;
 
         for (Component component : toAdd) {
