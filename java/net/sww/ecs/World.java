@@ -48,6 +48,10 @@ public final class World {
             entity.update(dt);
         }
 
+        for (Entity entity : entities.values()) {
+            entity.lateUpdate(dt);
+        }
+
         for (Entity entity : toRemove) {
             for (Manager manager : managers) {
                 for (Component component : entity.components.values()) {

@@ -82,9 +82,6 @@ public final class Entity {
         for (Component component : components.values()) {
             component.update(dt);
         }
-        for (Component component : components.values()) {
-            component.lateUpdate(dt);
-        }
         componentsLocked = false;
 
         for (Component component : toAdd) {
@@ -96,6 +93,14 @@ public final class Entity {
             _uninstall(component);
         }
         toRemove.clear();
+    }
+
+    public void lateUpdate(float dt) {
+        componentsLocked = true;
+        for (Component component : components.values()) {
+            component.lateUpdate(dt);
+        }
+        componentsLocked = false;
     }
 
     public <T extends Component> T get(Class<T> type) {
